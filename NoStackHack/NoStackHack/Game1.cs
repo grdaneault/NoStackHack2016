@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using NoStackHack.Rendering;
 
 namespace NoStackHack
 {
@@ -10,7 +11,8 @@ namespace NoStackHack
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
-        SpriteBatch spriteBatch;
+
+        private RenderHelper _renderHelper;
 
         public Game1()
         {
@@ -27,7 +29,8 @@ namespace NoStackHack
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            _renderHelper = new RenderHelper();
+            _renderHelper.Init(GraphicsDevice);
             base.Initialize();
         }
 
@@ -37,10 +40,6 @@ namespace NoStackHack
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
-            // TODO: use this.Content to load your game content here
         }
 
         /// <summary>
@@ -74,6 +73,12 @@ namespace NoStackHack
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.CornflowerBlue);
+
+            _renderHelper.Batch.Begin();
+
+            _renderHelper.DrawBox(new Vector2(100, 100), new Vector2(200, 50), Color.Red);
+
+            _renderHelper.Batch.End();
 
             // TODO: Add your drawing code here
 
