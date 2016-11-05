@@ -13,8 +13,8 @@ namespace NoStackHack.ControlInput
         private ICommand _buttonY;
         private ICommand _buttonA;
         private ICommand _buttonB;
-        private MoveCommand _stickLeft;
-        private MoveCommand _stickRight;
+        private IStickCommand _stickLeft;
+        private IStickCommand _stickRight;
 
         public InputHandler()
         {
@@ -23,12 +23,12 @@ namespace NoStackHack.ControlInput
 
         private void Initialize()
         {
-            _buttonX = new NoCommand();
+            _buttonX = new ResetPositionCommand();
             _buttonY = new NoCommand();
             _buttonA = new JumpCommand();
             _buttonB = new NoCommand();
-            _stickLeft = new IStickCommand();
-            _stickRight = new IStickCommand();
+            _stickLeft = new MoveCommand();
+            _stickRight = new RotateCommand();
         }
 
         public List<ICommand> HandleInput(PlayerIndex player)

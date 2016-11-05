@@ -39,7 +39,9 @@
   </PropertyGroup>
   <ItemGroup>
     <Compile Include="ControlInput\Commands\MoveCommand.cs" />
+    <Compile Include="ControlInput\Commands\ResetPositionCommand.cs" />
     <Compile Include="ControlInput\Commands\RotateCommand.cs" />
+    <Compile Include="ControlInput\IResetable.cs" />
     <Compile Include="ControlInput\IStickCommand.cs" />
     <Compile Include="ControlInput\IRotatable.cs" />
     <Compile Include="ControlInput\IJumper.cs" />
