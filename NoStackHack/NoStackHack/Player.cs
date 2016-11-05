@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework;
+﻿using System;
+using Microsoft.Xna.Framework;
 using NoStackHack.ControlInput;
 using NoStackHack.Utilities;
 
 namespace NoStackHack
 {
-    public class Player : IJumper, IMovable
+    public class Player : IJumper, IMovable, IResetable
     {
         public Vector2 Position { get; set; } = new Vector2(500, 500);
         public Vector2 Velocity { get; set; } = Vector2.Zero;
@@ -52,6 +53,12 @@ namespace NoStackHack
             Velocity -= new Vector2(Velocity.X * .2f, Velocity.Y * .05f);
             Position += Velocity;
 
+            Acceleration = Vector2.Zero;
+        }
+
+        public void ResetPosition()
+        {
+            Position = Vector2.Zero;
             Acceleration = Vector2.Zero;
         }
         //public Vector2 Position
