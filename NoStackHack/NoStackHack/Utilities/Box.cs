@@ -16,5 +16,10 @@ namespace NoStackHack.Utilities
             Position = position;
             Size = size;
         }
+        public Box(float x, float y, float w, float h)
+            : this(new Vector2(x, y), new Vector2(w, h))
+        {
+
+        }
     }
 }

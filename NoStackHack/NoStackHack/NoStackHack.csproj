@@ -47,6 +47,7 @@
     <Compile Include="Rendering\RenderHelper.cs" />
     <Compile Include="Utilities\Box.cs" />
     <Compile Include="Utilities\BoxLoader.cs" />
+    <Compile Include="Utilities\CollisionHelper.cs" />
     <Compile Include="Utilities\GameEntityAttribute.cs" />
     <Compile Include="Utilities\ICommand.cs" />
   </ItemGroup>
