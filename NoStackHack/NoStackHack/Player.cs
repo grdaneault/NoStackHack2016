@@ -24,7 +24,7 @@ namespace NoStackHack
         {
             //_x += direction.X;
             //_y -= direction.Y;
-            Acceleration += new Vector2(direction.X, 0);
+            Acceleration += new Vector2(direction.X, -direction.Y);
             
         }
 
