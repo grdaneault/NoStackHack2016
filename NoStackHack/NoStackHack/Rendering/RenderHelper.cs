@@ -11,6 +11,8 @@ namespace NoStackHack.Rendering
     class RenderHelper
     {
 
+        
+
         public GraphicsDevice Device { get; private set; }
         public SpriteBatch Batch { get; private set; }
         public Texture2D Pixel { get; private set; }
@@ -18,6 +20,7 @@ namespace NoStackHack.Rendering
         public void Init(GraphicsDevice device)
         {
             Device = device;
+
             Pixel = new Texture2D(Device, 1, 1, false, SurfaceFormat.Color);
             Pixel.SetData<Color>(new Color[] { Color.White });
 

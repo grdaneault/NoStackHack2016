@@ -20,12 +20,17 @@ namespace NoStackHack.Utilities
 
             using (var reader = new StreamReader(File.OpenRead(filePath)))
             {
-                var line = reader.ReadLine();
+                while (!reader.EndOfStream)
+                {
 
-                var parts = line.Split(',').Select(x => x.Trim()).ToList();
-                var position = new Vector2(float.Parse(parts[0]), float.Parse(parts[1]));
-                var size = new Vector2(float.Parse(parts[2]), float.Parse(parts[3]));
-                onBoxRead(new Box(position, size));
+
+                    var line = reader.ReadLine();
+
+                    var parts = line.Split(',').Select(x => x.Trim()).ToList();
+                    var position = new Vector2(float.Parse(parts[0]), float.Parse(parts[1]));
+                    var size = new Vector2(float.Parse(parts[2]), float.Parse(parts[3]));
+                    onBoxRead(new Box(position, size));
+                }
             }
             
         }
