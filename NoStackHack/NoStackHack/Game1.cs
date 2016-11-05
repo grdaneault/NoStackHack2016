@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using NoStackHack.ControlInput;
 using NoStackHack.Rendering;
 using NoStackHack.Utilities;
 using System.Collections.Generic;
@@ -19,6 +20,7 @@ namespace NoStackHack
         private RenderHelper _renderHelper;
         private List<Box> _boxes;
         private BackgroundImage _background;
+        private List<Player> _players = new List<Player>();
 
         public Game1()
         {
@@ -45,6 +47,11 @@ namespace NoStackHack
             _boxes = BoxLoader.LoadFromFile("Content/test_world.boxes");
             _background = new BackgroundImage();
             _background.Init(GraphicsDevice, _screenSize);
+
+            var player1 = new Player(PlayerIndex.One);
+            var player2 = new Player(PlayerIndex.Two);
+            _players.Add(player1);
+            _players.Add(player2);
             base.Initialize();
         }
 
@@ -75,7 +82,16 @@ namespace NoStackHack
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
+            var inputHandler = new InputHandler();
 
+            foreach(var player in _players)
+            {
+                var commands = inputHandler.HandleInput(player.PlayerIndex);
+                foreach (var command in commands)
+                {
+                    command.Execute(player);
+                }
+            }
             // TODO: Add your update logic here
 
             base.Update(gameTime);
@@ -96,6 +112,11 @@ namespace NoStackHack
                 _renderHelper.DrawBox(box.Position, box.Size, Color.OliveDrab);
             }
             _background.Draw();
+
+            foreach(var player in _players)
+            {
+                _renderHelper.DrawBox(player.Position, new Vector2(50, 50));
+            }
 
             _renderHelper.Batch.End();
 

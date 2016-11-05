@@ -3,9 +3,6 @@ using Microsoft.Xna.Framework.Input;
 using NoStackHack.Utilities;
 using System;
 using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoStackHack.ControlInput
 {
@@ -15,6 +12,8 @@ namespace NoStackHack.ControlInput
         private ICommand _buttonY;
         private ICommand _buttonA;
         private ICommand _buttonB;
+        private MoveCommand _stickLeft;
+        private ICommand _stickRight;
 
         public InputHandler()
         {
@@ -23,27 +22,38 @@ namespace NoStackHack.ControlInput
 
         private void Initialize()
         {
-            //_buttonX = 
+            _buttonX = new NoCommand();
+            _buttonY = new NoCommand();
+            _buttonA = new JumpCommand();
+            _buttonB = new NoCommand();
+            _stickLeft = new MoveCommand();
         }
 
-        public void HandleInput()
+        public List<ICommand> HandleInput(PlayerIndex player)
         {
-            if(GamePad.GetState(PlayerIndex.One).Buttons.X == ButtonState.Pressed)
+            var commandList = new List<ICommand>();
+
+            if(GamePad.GetState(player).Buttons.X == ButtonState.Pressed)
             {
-                _buttonX.Execute();
+                commandList.Add(_buttonX);
             }
-            if (GamePad.GetState(PlayerIndex.One).Buttons.X == ButtonState.Pressed)
+            if (GamePad.GetState(player).Buttons.Y == ButtonState.Pressed)
             {
-                _buttonY.Execute();
+                commandList.Add(_buttonY);
             }
-            if (GamePad.GetState(PlayerIndex.One).Buttons.X == ButtonState.Pressed)
+            if (GamePad.GetState(player).Buttons.A == ButtonState.Pressed)
             {
-                _buttonA.Execute();
+                commandList.Add(_buttonA);
             }
-            if (GamePad.GetState(PlayerIndex.One).Buttons.X == ButtonState.Pressed)
+            if (GamePad.GetState(player).Buttons.B == ButtonState.Pressed)
             {
-                _buttonB.Execute();
+                commandList.Add(_buttonB);
             }
+
+            _stickLeft.Direction = GamePad.GetState(player).ThumbSticks.Left;
+            commandList.Add(_stickLeft);
+
+            return commandList;
         }
     }
 }

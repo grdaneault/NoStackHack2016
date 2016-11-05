@@ -38,9 +38,14 @@
     <ApplicationIcon>Icon.ico</ApplicationIcon>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="ControlInput\IJumper.cs" />
+    <Compile Include="ControlInput\IMovable.cs" />
     <Compile Include="ControlInput\InputHandler.cs" />
     <Compile Include="ControlInput\JumpCommand.cs" />
+    <Compile Include="ControlInput\MoveCommand.cs" />
+    <Compile Include="ControlInput\NoCommand.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="IGameObject.cs" />
     <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
@@ -49,7 +54,6 @@
     <Compile Include="Utilities\Box.cs" />
     <Compile Include="Utilities\BoxLoader.cs" />
     <Compile Include="Utilities\CollisionHelper.cs" />
-    <Compile Include="Utilities\GameEntityAttribute.cs" />
     <Compile Include="Utilities\ICommand.cs" />
     <Compile Include="Utilities\Vector2Extensions.cs" />
     <Compile Include="Rendering\Streak.cs" />
