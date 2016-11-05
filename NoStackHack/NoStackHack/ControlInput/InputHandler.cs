@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Input;
+using NoStackHack.ControlInput.Commands;
 using NoStackHack.Utilities;
 using System;
 using System.Collections.Generic;
@@ -13,7 +14,7 @@ namespace NoStackHack.ControlInput
         private ICommand _buttonA;
         private ICommand _buttonB;
         private MoveCommand _stickLeft;
-        private ICommand _stickRight;
+        private MoveCommand _stickRight;
 
         public InputHandler()
         {
@@ -26,7 +27,8 @@ namespace NoStackHack.ControlInput
             _buttonY = new NoCommand();
             _buttonA = new JumpCommand();
             _buttonB = new NoCommand();
-            _stickLeft = new MoveCommand();
+            _stickLeft = new IStickCommand();
+            _stickRight = new IStickCommand();
         }
 
         public List<ICommand> HandleInput(PlayerIndex player)
@@ -52,6 +54,9 @@ namespace NoStackHack.ControlInput
 
             _stickLeft.Direction = GamePad.GetState(player).ThumbSticks.Left;
             commandList.Add(_stickLeft);
+
+            _stickRight.Direction = GamePad.GetState(player).ThumbSticks.Right;
+            commandList.Add(_stickRight);
 
             return commandList;
         }
