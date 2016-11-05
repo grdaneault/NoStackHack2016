@@ -24,7 +24,7 @@ namespace NoStackHack
         {
             //_x += direction.X;
             //_y -= direction.Y;
-            Acceleration += new Vector2(direction.X, -direction.Y);
+            Acceleration += new Vector2(direction.X, 0);
             
         }
 
@@ -43,7 +43,13 @@ namespace NoStackHack
         {
 
             Velocity += Acceleration;
-            Velocity -= Velocity * .1f;
+
+            if (Velocity.Length() > 50)
+            {
+                Velocity = Velocity.Normal() * 50;
+            }
+
+            Velocity -= new Vector2(Velocity.X * .2f, Velocity.Y * .05f);
             Position += Velocity;
 
             Acceleration = Vector2.Zero;

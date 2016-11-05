@@ -13,5 +13,9 @@ namespace NoStackHack.Utilities
         {
             return new Vector2(-v.Y, v.X);
         }
+        public static Vector2 Normal(this Vector2 v)
+        {
+            return new Vector2(v.X, v.Y) / v.Length();
+        }
     }
 }

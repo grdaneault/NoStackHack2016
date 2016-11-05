@@ -13,6 +13,7 @@ namespace NoStackHack.Utilities
         public static CollisionInfo CollisionInfo(Box a, Box b)
         {
             var info = new CollisionInfo();
+            info.IsColliding = true;
             info.A = a;
             info.B = b;
             
@@ -28,7 +29,7 @@ namespace NoStackHack.Utilities
             // REMEMBER, the axes **MUST** be normalized!!!
 
             // 2. project the shapes onto each axis
-            var mostOverlap = 0f;
+            var leastOverlap = float.MaxValue;
             var normal = Vector2.Zero;
             foreach(Vector2 axis in axes)
             {
@@ -88,16 +89,26 @@ namespace NoStackHack.Utilities
                 {
                     info.IsColliding = true;
 
-                    if (overlap > mostOverlap)
+                    if (overlap < leastOverlap)
                     {
-                        mostOverlap = overlap;
+                        leastOverlap = overlap;
+                        //normal = axis * normalFlipper;
                         normal = axis * normalFlipper;
+
+                        // we have the normal axis, but we need to know which way to flip it.
+                         
+
+                        //normal = normal.Perpendicular();
                     }
 
+                } else
+                {
+                    info.IsColliding = false;
+                    break;
                 }
             }
 
-            info.Overlap = mostOverlap;
+            info.Overlap = leastOverlap;
             info.Normal = normal;
 
             return info;
