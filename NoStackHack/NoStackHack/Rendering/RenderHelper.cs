@@ -1,18 +1,11 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 namespace NoStackHack.Rendering
 {
     class RenderHelper
     {
-
-        
-
         public GraphicsDevice Device { get; private set; }
         public SpriteBatch Batch { get; private set; }
         public Texture2D Pixel { get; private set; }
@@ -27,7 +20,6 @@ namespace NoStackHack.Rendering
             Batch = new SpriteBatch(Device);
             
         }
-
         
         public void DrawBox(Vector2 position, Vector2 size, Color color = default(Color))
         {
@@ -48,6 +40,5 @@ namespace NoStackHack.Rendering
             Batch.Draw(Pixel, centerPosition, null, null, Vector2.Zero, angle, new Vector2(length, 1), color, SpriteEffects.None, 1);
             //Batch.Draw(Pixel, centerPosition, null, color, angle, Vector2.Zero, new Vector2(length, 1), SpriteEffects.None, 1f);
         }
-
     }
 }

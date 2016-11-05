@@ -1,23 +1,38 @@
-﻿using NoStackHack.Utilities;
+﻿using Microsoft.Xna.Framework;
+using NoStackHack.ControlInput;
 
 namespace NoStackHack
 {
-    [GameEntity]
-    public class Player
+    public class Player : IJumper, IMovable
     {
-        private int _x, _y;
+        private float _x, _y;
 
         public Player() { }
 
-        public Player(int x, int y)
+        public Player(PlayerIndex playerIndex)
         {
-            _x = x;
-            _y = y;
+            PlayerIndex = playerIndex;
+        }
+
+        public void Move(Vector2 direction)
+        {
+            _x += direction.X;
+            _y -= direction.Y;
         }
 
         public void Jump()
         {
             _y += 10;
+        }
+
+        public PlayerIndex PlayerIndex
+        {
+            get; private set;
+        }
+
+        public Vector2 Position
+        {
+            get { return new Vector2(_x, _y); }
         }
     }
 }
