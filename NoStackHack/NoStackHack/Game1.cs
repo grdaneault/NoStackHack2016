@@ -2,6 +2,8 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using NoStackHack.Rendering;
+using NoStackHack.Utilities;
+using System.Collections.Generic;
 
 namespace NoStackHack
 {
@@ -13,6 +15,7 @@ namespace NoStackHack
         GraphicsDeviceManager graphics;
 
         private RenderHelper _renderHelper;
+        private List<Box> _boxes;
 
         public Game1()
         {
@@ -31,6 +34,7 @@ namespace NoStackHack
             // TODO: Add your initialization logic here
             _renderHelper = new RenderHelper();
             _renderHelper.Init(GraphicsDevice);
+            _boxes = BoxLoader.LoadFromFile("Content/test_world.boxes");
             base.Initialize();
         }
 
@@ -76,7 +80,10 @@ namespace NoStackHack
 
             _renderHelper.Batch.Begin();
 
-            DrawPlayground();
+            foreach(Box box in _boxes)
+            {
+                _renderHelper.DrawBox(box.Position, box.Size);
+            }
 
             _renderHelper.Batch.End();
 
@@ -85,10 +92,5 @@ namespace NoStackHack
             base.Draw(gameTime);
         }
 
-        private void DrawPlayground()
-        { 
-            _renderHelper.DrawLine(new Vector2(0, 0), new Vector2(100, 100));
-            _renderHelper.DrawLine(new Vector2(100, 0), new Vector2(100, 200), Color.Red);
-        }
     }
 }
