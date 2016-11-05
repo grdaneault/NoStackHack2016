@@ -76,13 +76,19 @@ namespace NoStackHack
 
             _renderHelper.Batch.Begin();
 
-            _renderHelper.DrawBox(new Vector2(100, 100), new Vector2(200, 50), Color.Red);
+            DrawPlayground();
 
             _renderHelper.Batch.End();
 
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);
+        }
+
+        private void DrawPlayground()
+        {
+            _renderHelper.DrawLine(new Vector2(0, 0), new Vector2(100, 100));
+            _renderHelper.DrawLine(new Vector2(100, 0), new Vector2(100, 200), Color.Red);
         }
     }
 }
