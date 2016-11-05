@@ -1,4 +1,6 @@
-﻿namespace NoStackHack.Utilities
+﻿using System;
+
+namespace NoStackHack.Utilities
 {
     public interface ICommand
     {

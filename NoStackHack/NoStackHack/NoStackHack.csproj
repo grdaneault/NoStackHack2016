@@ -41,9 +41,11 @@
     <Compile Include="ControlInput\InputHandler.cs" />
     <Compile Include="ControlInput\JumpCommand.cs" />
     <Compile Include="Game1.cs" />
+    <Compile Include="Player.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\RenderHelper.cs" />
+    <Compile Include="Utilities\GameEntityAttribute.cs" />
     <Compile Include="Utilities\ICommand.cs" />
   </ItemGroup>
   <ItemGroup>
