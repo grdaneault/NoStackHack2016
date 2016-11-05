@@ -91,6 +91,18 @@ namespace NoStackHack
                 {
                     command.Execute(player);
                 }
+                player.Update();
+
+                // World physics. This should probably be moved
+                //foreach (Box box in _boxes)
+                //{
+                //    var info = CollisionHelper.CollisionInfo(box, player.Box);
+                //    if (info.IsColliding)
+                //    {
+                //        player.Position += info.Normal * info.Overlap;
+                //    }
+                //}
+
             }
             // TODO: Add your update logic here
 
@@ -115,7 +127,7 @@ namespace NoStackHack
 
             foreach(var player in _players)
             {
-                _renderHelper.DrawBox(player.Position, new Vector2(50, 50));
+                _renderHelper.DrawBox(player.Box);
             }
 
             _renderHelper.Batch.End();

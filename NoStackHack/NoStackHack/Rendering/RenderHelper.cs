@@ -1,5 +1,6 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NoStackHack.Utilities;
 using System;
 
 namespace NoStackHack.Rendering
@@ -21,6 +22,11 @@ namespace NoStackHack.Rendering
             
         }
         
+        public void DrawBox(Box box, Color color = default(Color))
+        {
+            DrawBox(box.Position, box.Size, color);
+        }
+
         public void DrawBox(Vector2 position, Vector2 size, Color color = default(Color))
         {
             if (color == default(Color))
