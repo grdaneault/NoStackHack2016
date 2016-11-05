@@ -50,6 +50,7 @@
     <Compile Include="Utilities\CollisionHelper.cs" />
     <Compile Include="Utilities\GameEntityAttribute.cs" />
     <Compile Include="Utilities\ICommand.cs" />
+    <Compile Include="Utilities\Vector2Extensions.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="MonoGame.Framework">

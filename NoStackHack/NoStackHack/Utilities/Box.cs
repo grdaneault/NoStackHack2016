@@ -11,6 +11,12 @@ namespace NoStackHack.Utilities
     {
         public Vector2 Position { get; set; }
         public Vector2 Size { get; set; }
+
+        public float Left { get { return Position.X; } }
+        public float Right { get { return Position.X + Size.X; } }
+        public float Top { get { return Position.Y; } }
+        public float Bottom { get { return Position.Y + Size.Y; } }
+
         public Box(Vector2 position, Vector2 size)
         {
             Position = position;
@@ -21,5 +27,17 @@ namespace NoStackHack.Utilities
         {
 
         }
+
+        public Vector2[] GetPoints()
+        {
+            return new Vector2[]
+            {
+                Position,
+                Position + Vector2.UnitX*Size.X,
+                Position + Size,
+                Position + Vector2.UnitY*Size.Y
+            };
+        }
+
     }
 }
