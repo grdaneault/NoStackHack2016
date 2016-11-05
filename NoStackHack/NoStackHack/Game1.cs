@@ -86,7 +86,7 @@ namespace NoStackHack
         }
 
         private void DrawPlayground()
-        {
+        { 
             _renderHelper.DrawLine(new Vector2(0, 0), new Vector2(100, 100));
             _renderHelper.DrawLine(new Vector2(100, 0), new Vector2(100, 200), Color.Red);
         }
