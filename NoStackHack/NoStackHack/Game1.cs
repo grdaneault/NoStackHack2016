@@ -14,16 +14,20 @@ namespace NoStackHack
     {
         GraphicsDeviceManager graphics;
 
+        Rectangle _screenSize;
+
         private RenderHelper _renderHelper;
         private List<Box> _boxes;
+        private BackgroundImage _background;
 
         public Game1()
         {
+            _screenSize = new Rectangle(0, 0, 1920, 1080);
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1920;
-            graphics.PreferredBackBufferHeight = 1080;
             //graphics.IsFullScreen = true;
 
+            graphics.PreferredBackBufferWidth = _screenSize.Width;
+            graphics.PreferredBackBufferHeight = _screenSize.Height;
             Content.RootDirectory = "Content";
         }
 
@@ -39,6 +43,8 @@ namespace NoStackHack
             _renderHelper = new RenderHelper();
             _renderHelper.Init(GraphicsDevice);
             _boxes = BoxLoader.LoadFromFile("Content/test_world.boxes");
+            _background = new BackgroundImage();
+            _background.Init(GraphicsDevice, _screenSize);
             base.Initialize();
         }
 
@@ -48,6 +54,7 @@ namespace NoStackHack
         /// </summary>
         protected override void LoadContent()
         {
+            _background.LoadContent(Content);
         }
 
         /// <summary>
@@ -80,7 +87,7 @@ namespace NoStackHack
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Navy);
 
             _renderHelper.Batch.Begin();
 
@@ -88,6 +95,7 @@ namespace NoStackHack
             {
                 _renderHelper.DrawBox(box.Position, box.Size);
             }
+            _background.Draw();
 
             _renderHelper.Batch.End();
 
