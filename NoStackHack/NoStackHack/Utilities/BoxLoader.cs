@@ -25,6 +25,14 @@ namespace NoStackHack.Utilities
 
 
                     var line = reader.ReadLine();
+                    if (line.StartsWith("#"))
+                    {
+                        continue; // skip a comment
+                    }
+                    if (line.Contains("#"))
+                    {
+                        line = line.Substring(0, line.IndexOf("#")); // only read until comment
+                    }
 
                     var parts = line.Split(',').Select(x => x.Trim()).ToList();
                     var position = new Vector2(float.Parse(parts[0]), float.Parse(parts[1]));
