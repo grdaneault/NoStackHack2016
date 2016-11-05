@@ -12,11 +12,17 @@ namespace NoStackHack
     {
         GraphicsDeviceManager graphics;
 
+        Rectangle _screenSize;
+
         private RenderHelper _renderHelper;
+        private BackgroundImage _background;
 
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            _screenSize = new Rectangle(0, 0, 1280, 720);
+            graphics.PreferredBackBufferWidth = _screenSize.Width;
+            graphics.PreferredBackBufferHeight = _screenSize.Height;
             Content.RootDirectory = "Content";
         }
 
@@ -31,6 +37,8 @@ namespace NoStackHack
             // TODO: Add your initialization logic here
             _renderHelper = new RenderHelper();
             _renderHelper.Init(GraphicsDevice);
+            _background = new BackgroundImage();
+            _background.Init(GraphicsDevice, _screenSize);
             base.Initialize();
         }
 
@@ -40,6 +48,7 @@ namespace NoStackHack
         /// </summary>
         protected override void LoadContent()
         {
+            _background.LoadContent(Content);
         }
 
         /// <summary>
@@ -72,11 +81,12 @@ namespace NoStackHack
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.Navy);
 
             _renderHelper.Batch.Begin();
 
             DrawPlayground();
+            _background.Draw();
 
             _renderHelper.Batch.End();
 
