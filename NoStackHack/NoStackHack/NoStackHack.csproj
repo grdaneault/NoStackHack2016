@@ -58,6 +58,8 @@
     <Compile Include="Rendering\BackgroundImage.cs" />
     <Compile Include="Rendering\Character\CharacterVisual.cs" />
     <Compile Include="Rendering\Character\IdleState.cs" />
+    <Compile Include="Rendering\Fonter.cs" />
+    <Compile Include="Rendering\Message.cs" />
     <Compile Include="Rendering\RenderHelper.cs" />
     <Compile Include="Utilities\Box.cs" />
     <Compile Include="Utilities\BoxLoader.cs" />
@@ -114,6 +116,12 @@
     </Content>
   </ItemGroup>
   <ItemGroup>
+    <None Include="Content\basic.spritefont">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="Content\basic.xnb">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="Content\level1.map">
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>

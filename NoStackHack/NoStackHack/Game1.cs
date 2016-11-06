@@ -23,6 +23,7 @@ namespace NoStackHack
         private BackgroundImage _background;
         private List<Player> _players = new List<Player>();
         private World _world;
+        private Fonter _fonter;
 
         public Game1()
         {
@@ -52,12 +53,18 @@ namespace NoStackHack
 
             _world = WorldLoader.Load("Content/level1.map", Content);
             _world.Init(GraphicsDevice, _screenSize);
+
             _boxes = WorldLoader.GenerateHitboxes(_world);
 
             var player1 = new Player(PlayerIndex.One);
             var player2 = new Player(PlayerIndex.Two);
             _players.Add(player1);
             _players.Add(player2);
+
+            _fonter = new Fonter();
+            _fonter.Init(GraphicsDevice, _screenSize);
+            _fonter.Messages.Add(new Message(() => player1.Position, () => "P1:\n" + player1.Position));
+            _fonter.Messages.Add(new Message(() => player2.Position, () => "P2:\n" + player2.Position));
             base.Initialize();
         }
 
@@ -68,6 +75,7 @@ namespace NoStackHack
         protected override void LoadContent()
         {
             _background.LoadContent(Content);
+            _fonter.Load(Content);
         }
 
         /// <summary>
@@ -139,6 +147,8 @@ namespace NoStackHack
             }
 
             _renderHelper.Batch.End();
+
+            _fonter.Draw();
 
             // TODO: Add your drawing code here
 
