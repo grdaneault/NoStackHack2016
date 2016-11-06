@@ -22,7 +22,7 @@ namespace NoStackHack
         {
             PlayerIndex = PlayerIndex.One;
             PhysicsComponent = new PhysicsComponentVector();
-            PhysicsComponent.Position = new Vector2(500, 500);
+            PhysicsComponent.Position = new Vector2(200, 500);
             VisualComponent = new VisualComponent(this);
         }
 
@@ -30,7 +30,7 @@ namespace NoStackHack
         {
             PlayerIndex = playerIndex;
             PhysicsComponent = new PhysicsComponentVector();
-            PhysicsComponent.Position = new Vector2(500, 500);
+            PhysicsComponent.Position = new Vector2(700, 100);
             VisualComponent = new VisualComponent(this);
         }
 

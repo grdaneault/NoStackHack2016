@@ -68,10 +68,10 @@ namespace NoStackHack
 
             var player1 = new Player(PlayerIndex.One);
             var player2 = new Player(PlayerIndex.Two);
-            var player3 = new Player(PlayerIndex.Three);
+            //var player3 = new Player(PlayerIndex.Three);
             _players.Add(player1);
             _players.Add(player2);
-            _players.Add(player3);
+            //_players.Add(player3);
 
             _fonter = new Fonter();
             _fonter.Init(_renderHelper, _screenSize);
