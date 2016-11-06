@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.IO;
 using System.Xml.Schema;
 using Microsoft.Xna.Framework;
@@ -10,10 +11,12 @@ namespace NoStackHack.WorldMap
 {
     class WorldLoader
     {
+        
         public static World Load(string mapFile, ContentManager content)
         {
             using (var reader = new StreamReader(File.OpenRead(mapFile)))
             {
+                var tileMaker = new TileFactory();
                 var dims = reader.ReadLine().Split(',');
                 var dimensions = new Point(int.Parse(dims[0]), int.Parse(dims[1]));
                 var map = new Tile[dimensions.Y][];
@@ -24,9 +27,9 @@ namespace NoStackHack.WorldMap
                     map[y] = new Tile[dimensions.X];
                     for (var x = 0; x < dimensions.X; x++)
                     {
-                        var background = line[2 * x + 1];
-                        var foreground = line[2 * x];
-                        map[y][x] = new Tile(background, foreground);
+                        var foreground = line[2 * x + 1];
+                        var background = line[2 * x];
+                        map[y][x] = tileMaker.Create(x, y, foreground, background);
                     }
                 }
 
@@ -38,6 +41,14 @@ namespace NoStackHack.WorldMap
                         char id = line[0];
                         string path = line.Substring(1);
                         Tile.RegisterTexture(id, content.Load<Texture2D>(path));
+                    }
+                }
+
+                for (var x = 0; x < dimensions.X; x++)
+                {
+                    for (var y = 0; y < dimensions.Y; y++)
+                    {
+                        map[y][x].PictureUp();
                     }
                 }
 
@@ -68,7 +79,7 @@ namespace NoStackHack.WorldMap
                     }
                     else if (inBox)
                     {
-                        horizontalBoxes.Add(new Box(startCoord.X, startCoord.Y, width, world.TileSize.Y));
+                        horizontalBoxes.Add(new Box(startCoord.X-1, startCoord.Y-1, width+2, world.TileSize.Y+2));
                         inBox = false;
                         startCoord = Vector2.Zero;
                         width = 0;
@@ -76,7 +87,7 @@ namespace NoStackHack.WorldMap
                 }
                 if (inBox)
                 {
-                    horizontalBoxes.Add(new Box(startCoord.X, startCoord.Y, width, world.TileSize.Y));
+                    horizontalBoxes.Add(new Box(startCoord.X-1, startCoord.Y-1, width+2, world.TileSize.Y+2));
                 }
             }
 
@@ -99,7 +110,7 @@ namespace NoStackHack.WorldMap
                     }
                     else if (inBox)
                     {
-                        verticalBoxes.Add(new Box(startCoord.X, startCoord.Y, world.TileSize.X, height));
+                        verticalBoxes.Add(new Box(startCoord.X-1, startCoord.Y-1, world.TileSize.X+2, height+2));
                         inBox = false;
                         startCoord = Vector2.Zero;
                         height = 0;
@@ -107,7 +118,7 @@ namespace NoStackHack.WorldMap
                 }
                 if (inBox)
                 {
-                    verticalBoxes.Add(new Box(startCoord.X, startCoord.Y, world.TileSize.X, height));
+                    verticalBoxes.Add(new Box(startCoord.X-1, startCoord.Y-1, world.TileSize.X+2, height+2));
                 }
             }
 

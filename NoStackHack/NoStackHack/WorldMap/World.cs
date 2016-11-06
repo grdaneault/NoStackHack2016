@@ -61,7 +61,7 @@ namespace NoStackHack.WorldMap
 
         public bool FilledCell(int x, int y)
         {
-            return _map[y][x].IsFilled;
+            return _map[y][x].IsFilled();
         }
 
         public void DrawForeground()
