@@ -29,6 +29,8 @@ namespace NoStackHack.WorldMap
             get { return _map[0].Length; }
         }
 
+        public Vector2 MapSize => new Vector2((Cols + 1) * TileSize.X, (Rows + 1) * TileSize.Y);
+
         public Point TileSize { get; private set; }
 
         public World(Tile[][] map)
