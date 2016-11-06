@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NoStackHack.Utilities;
 
 namespace NoStackHack.WorldMap
 {
@@ -9,6 +10,8 @@ namespace NoStackHack.WorldMap
     {
         public Texture2D Foreground { get; private set; }
         public Texture2D Background { get; private set; }
+
+        public Color Color { get; private set; }
 
         private readonly char _foreground;
         private readonly char _background;
@@ -53,6 +56,11 @@ namespace NoStackHack.WorldMap
             {
                 return choices[_random.Next(0, choices.Count - 1)];
             }
+        }
+
+        public virtual ICommand InteractWithPlayer(Player player)
+        {
+            return null;
         }
     }
 }

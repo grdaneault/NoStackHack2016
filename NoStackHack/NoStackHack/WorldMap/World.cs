@@ -7,6 +7,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using NoStackHack.Rendering;
+using NoStackHack.Utilities;
 
 namespace NoStackHack.WorldMap
 {
@@ -16,6 +17,7 @@ namespace NoStackHack.WorldMap
         private GraphicsDevice _device;
         private SpriteBatchDecarator _batch;
         private Rectangle _screenSize; //todo pull out into base class of some sort?
+        private ISet<Tile> _touchingPlayer = new HashSet<Tile>();
 
         public int Rows
         {
@@ -53,7 +55,8 @@ namespace NoStackHack.WorldMap
                     if (tile != null)
                     {
                         var location = new Point((x)*TileSize.X, y*TileSize.Y);
-                        _batch.Draw(tileFunc(x, y), new Rectangle(location, TileSize), Color.White);
+                        Color color = _touchingPlayer.Contains(_map[y][x]) ? Color.Red : Color.White;
+                        _batch.Draw(tileFunc(x, y), new Rectangle(location, TileSize), color);
                     }
                 }
             }
@@ -75,5 +78,37 @@ namespace NoStackHack.WorldMap
             Draw((x, y) => _map[y][x].Background);
         }
 
+        public void ClearTouching()
+        {
+            _touchingPlayer.Clear();
+        }
+
+        public IList<ICommand> UpdatePlayerForWorld(Player player)
+        {
+            var padding = 3;
+            var top = (int)Math.Floor((player.Box.Top - padding) / TileSize.Y);
+            var left = (int)Math.Floor((player.Box.Left - padding) / TileSize.X);
+            var right = (int)Math.Floor((player.Box.Right + padding) / TileSize.X);
+            var bottom = (int)Math.Floor((player.Box.Bottom + padding) / TileSize.Y);
+
+            var commandSet = new HashSet<ICommand>();
+
+            for (var x = left; x <= right; x++)
+            {
+                for (var y = bottom; y >= top; y--)
+                {
+                    if (y >=0 && y < Rows && x >= 0 && x < Cols)
+                    {
+                        var tile = _map[y][x];
+                        commandSet.Add(tile.InteractWithPlayer(player));
+                        _touchingPlayer.Add(tile);
+                    }
+                }
+            }
+
+            commandSet.Remove(null);
+
+            return commandSet.ToList();
+        }
     }
 }

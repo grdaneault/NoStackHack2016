@@ -48,9 +48,9 @@ namespace NoStackHack
             PhysicsComponent.Acceleration += Vector2.UnitX * direction.X;
         }
 
-        public void Jump()
+        public void Jump(float power)
         {
-            PhysicsComponent.Acceleration -= Vector2.UnitY * 10;
+            PhysicsComponent.Acceleration -= Vector2.UnitY * 10 * power;
         }
 
         public void ResetPosition()
