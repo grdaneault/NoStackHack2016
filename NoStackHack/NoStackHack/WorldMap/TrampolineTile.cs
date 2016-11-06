@@ -3,6 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using NoStackHack.ControlInput;
+using NoStackHack.ControlInput.Commands;
+using NoStackHack.Utilities;
 
 namespace NoStackHack.WorldMap
 {
@@ -13,6 +17,11 @@ namespace NoStackHack.WorldMap
         public override bool IsFilled()
         {
             return true;
+        }
+
+        public override ICommand InteractWithPlayer(Player player)
+        {
+            return new JumpCommand(10);
         }
     }
 }

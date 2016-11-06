@@ -55,7 +55,7 @@ namespace NoStackHack
             _background = new BackgroundImage();
             _background.Init(_renderHelper, _screenSize);
             
-            _world = WorldLoader.Load("Content/level3.map", Content);
+            _world = WorldLoader.Load("Content/level1.map", Content);
             _world.Init(_renderHelper, _screenSize);
 
             _renderHelper.ActiveCamera.WorldBotRight = new Vector2()
@@ -107,20 +107,19 @@ namespace NoStackHack
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             var inputHandler = new InputHandler();
-
+            _world.ClearTouching();
             foreach(var player in _players)
             {
                 var commands = inputHandler.HandleInput(player.PlayerIndex);
+                commands.AddRange(_world.UpdatePlayerForWorld(player));
                 foreach (var command in commands)
                 {
                     command.Execute(player);
                 }
 
                 player.Update(gameTime, _boxes);
-
-
-
             }
+
             // TODO: Add your update logic here
 
             _renderHelper.ActiveCamera.TrackBoxes(_players.Select(p => p.Box).ToList());

@@ -2,6 +2,7 @@
 {
     public interface IJumper : IGameObject
     {
-        void Jump();
+        void Jump(float power);
+
     }
 }
