@@ -60,6 +60,7 @@
     <Compile Include="Utilities\BoxLoader.cs" />
     <Compile Include="Utilities\CollisionHelper.cs" />
     <Compile Include="Utilities\ICommand.cs" />
+    <Compile Include="Utilities\IStateMachine.cs" />
     <Compile Include="Utilities\Vector2Extensions.cs" />
     <Compile Include="Rendering\Streak.cs" />
   </ItemGroup>

@@ -11,7 +11,7 @@ namespace NoStackHack
         public Vector2 Velocity { get; set; } = Vector2.Zero;
         public Vector2 Acceleration { get; set; } = Vector2.Zero;
 
-        public Box Box { get { return new Box(Position, Vector2.One * 50); } }
+        public Box Box { get { return new Box(Position, new Vector2(50, 100)); } }
         //private float _x, _y;
 
         public Player() { }
@@ -25,7 +25,7 @@ namespace NoStackHack
         {
             //_x += direction.X;
             //_y -= direction.Y;
-            Acceleration += new Vector2(direction.X, -direction.Y);
+            Acceleration += new Vector2(direction.X, 0);
             
         }
 
@@ -50,7 +50,7 @@ namespace NoStackHack
                 Velocity = Velocity.Normal() * 50;
             }
 
-            Velocity -= new Vector2(Velocity.X * .2f, Velocity.Y * .05f);
+            Velocity -= new Vector2(Velocity.X * .1f, Velocity.Y * .05f);
             Position += Velocity;
 
             Acceleration = Vector2.Zero;
