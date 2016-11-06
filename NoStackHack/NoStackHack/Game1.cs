@@ -119,7 +119,10 @@ namespace NoStackHack
 
             _renderHelper.ActiveCamera.TrackBoxes(_players.Select(p => p.Box).ToList());
             _renderHelper.ActiveCamera.Update(gameTime);
-            
+
+            //_renderHelper.ActiveCamera.PhysicsComponent.Position = _players[0].PhysicsComponent.Position;
+
+
             base.Update(gameTime);
         }
 
@@ -153,12 +156,12 @@ namespace NoStackHack
                 //_renderHelper.DrawBox(player.Box);
             }
 
-            _renderHelper.ActiveCamera.PhysicsComponent.Position = _players[0].PhysicsComponent.Position;
 
             _renderHelper.Batch.End();
 
             _fonter.Draw();
 
+            
             // TODO: Add your drawing code here
 
             base.Draw(gameTime);

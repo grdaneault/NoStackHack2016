@@ -77,7 +77,8 @@ namespace NoStackHack.Rendering
             Vector2 position, 
             Color color)
         {
-            Batch.DrawString(font, text, position, color, 0, Vector2.Zero, 1, SpriteEffects.None, 0);
+            
+            Batch.DrawString(font, text, position, color, 0, Vector2.Zero, 1, SpriteEffects.None, .3f);
         }
 
         public void End()

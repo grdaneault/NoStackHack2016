@@ -47,7 +47,7 @@ namespace NoStackHack.Rendering
             ScaleComponent.Position = .5f / ScaleComponent.Position;
 
             ScaleComponent.Position = Math.Min(1.9f, ScaleComponent.Position);
-            ScaleComponent.Position = Math.Max(.5f, ScaleComponent.Position);
+            ScaleComponent.Position = Math.Max(.3f, ScaleComponent.Position);
 
             PhysicsComponent.Position = target;
         }
