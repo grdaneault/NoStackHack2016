@@ -2,37 +2,52 @@
 using Microsoft.Xna.Framework;
 using NoStackHack.ControlInput;
 using NoStackHack.Utilities;
+using NoStackHack.Rendering.Character;
+using System.Collections.Generic;
+using NoStackHack.Rendering;
 
 namespace NoStackHack
 {
-    public class Player : IJumper, IMovable, IResetable
+    class Player : IJumper, IMovable, IResetable
     {
-        public Vector2 Position { get; set; } = new Vector2(500, 500);
-        public Vector2 Velocity { get; set; } = Vector2.Zero;
-        public Vector2 Acceleration { get; set; } = Vector2.Zero;
+        public PhysicsComponent PhysicsComponent { get; private set; }
 
-        public Box Box { get { return new Box(Position, new Vector2(50, 100)); } }
-        //private float _x, _y;
+        public CharacterComponent Visual { get; private set; }
 
-        public Player() { }
+        public Box Box { get { return new Box(PhysicsComponent.Position, new Vector2(50, 100)); } }
+
+
+        public Player()
+        {
+            PlayerIndex = PlayerIndex.One;
+            PhysicsComponent = new PhysicsComponent();
+            PhysicsComponent.Position = new Vector2(500, 500);
+            Visual = new CharacterComponent();
+        }
 
         public Player(PlayerIndex playerIndex)
         {
             PlayerIndex = playerIndex;
+            PhysicsComponent = new PhysicsComponent();
+            PhysicsComponent.Position = new Vector2(500, 500);
+            Visual = new CharacterComponent();
         }
 
         public void Move(Vector2 direction)
         {
-            //_x += direction.X;
-            //_y -= direction.Y;
-            Acceleration += new Vector2(direction.X, 0);
+            PhysicsComponent.Acceleration += new Vector2(direction.X, 0);
             
         }
 
         public void Jump()
         {
-            //_y += 10;
-            Acceleration -= Vector2.UnitY * 10;
+            PhysicsComponent.Acceleration -= Vector2.UnitY * 10;
+        }
+
+        public void ResetPosition()
+        {
+            PhysicsComponent.Position = new Vector2(500, 500);
+            PhysicsComponent.Acceleration = Vector2.Zero;
         }
 
         public PlayerIndex PlayerIndex
@@ -40,30 +55,31 @@ namespace NoStackHack
             get; private set;
         }
 
-        public void Update()
+        public void Update(GameTime time, List<Box> boxes)
         {
 
-            Velocity += Acceleration;
+            PhysicsComponent.Update(time);
+            Visual.Update(time);
 
-            if (Velocity.Length() > 50)
+            // World physics. This should probably be moved
+            foreach (Box box in boxes)
             {
-                Velocity = Velocity.Normal() * 50;
+                var info = CollisionHelper.CollisionInfo(Box, box);
+                if (info.IsColliding)
+                {
+                    PhysicsComponent.Position -= info.Normal * info.Overlap;
+                    PhysicsComponent.Velocity = Vector2.Reflect(PhysicsComponent.Velocity, info.Normal);
+                    //player.Acceleration -= info.Normal * info.Overlap;
+                }
             }
-
-            Velocity -= new Vector2(Velocity.X * .1f, Velocity.Y * .05f);
-            Position += Velocity;
-
-            Acceleration = Vector2.Zero;
         }
 
-        public void ResetPosition()
+        public void Render(RenderHelper render)
         {
-            Position = Vector2.Zero;
-            Acceleration = Vector2.Zero;
+            render.DrawBox(Box, Color.Orange);
+            Visual.Render(render);
         }
-        //public Vector2 Position
-        //{
-        //    get { return new Vector2(_x, _y); }
-        //}
+
+    
     }
 }

@@ -5,7 +5,7 @@ using System;
 
 namespace NoStackHack.Rendering
 {
-    class RenderHelper
+    public class RenderHelper
     {
         public GraphicsDevice Device { get; private set; }
         public SpriteBatch Batch { get; private set; }
