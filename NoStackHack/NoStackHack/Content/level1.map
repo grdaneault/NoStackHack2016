@@ -15,7 +15,7 @@
 ##. .#.W.W.W.#. . . . . . . . . . . . . .#. . . . .#. . . ##
 ##. .#.W.W.W.#. . . . . . . . . . . . .#. . . . . .#. . . ##
 ############################################################
-#tiles/wall.png
+#tiles/art/dirt_01.png
 .tiles/grass.png
 -tiles/rope.png
 Wtiles/water.png

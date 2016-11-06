@@ -136,7 +136,7 @@ namespace NoStackHack
 
             foreach (Box box in _boxes)
             {
-                _renderHelper.DrawBox(box.Position, box.Size, new Color(Color.Red, 100));
+                //_renderHelper.DrawBox(box.Position, box.Size, new Color(Color.Red, 0));
             }
 
 
