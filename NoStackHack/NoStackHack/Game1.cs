@@ -51,12 +51,12 @@ namespace NoStackHack
             _renderHelper.Init(GraphicsDevice);
             _renderHelper.ActiveCamera.SetWorldConstrains(Vector2.Zero);
 
-            _boxes = BoxLoader.LoadFromFile("Content/test_world.boxes");
-            _background = new BackgroundImage();
-            _background.Init(_renderHelper, _screenSize);
-            
             _world = WorldLoader.Load("Content/level3.map", Content);
             _world.Init(_renderHelper, _screenSize);
+
+            _boxes = BoxLoader.LoadFromFile("Content/test_world.boxes");
+            _background = new BackgroundImage();
+            _background.Init(_renderHelper, _screenSize, _world.MapSize);
 
             _renderHelper.ActiveCamera.WorldBotRight = new Vector2()
             {
