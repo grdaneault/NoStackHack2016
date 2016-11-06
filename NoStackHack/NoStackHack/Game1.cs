@@ -91,17 +91,23 @@ namespace NoStackHack
                 {
                     command.Execute(player);
                 }
+
+                // some forced gravity
+                player.Acceleration += Vector2.UnitY * 2 ;
+
                 player.Update();
 
                 // World physics. This should probably be moved
-                //foreach (Box box in _boxes)
-                //{
-                //    var info = CollisionHelper.CollisionInfo(box, player.Box);
-                //    if (info.IsColliding)
-                //    {
-                //        player.Position += info.Normal * info.Overlap;
-                //    }
-                //}
+                foreach (Box box in _boxes)
+                {
+                    var info = CollisionHelper.CollisionInfo(player.Box, box);
+                    if (info.IsColliding)
+                    {
+                        player.Position -= info.Normal * info.Overlap;
+                        player.Velocity = Vector2.Reflect(player.Velocity, info.Normal);
+                        //player.Acceleration -= info.Normal * info.Overlap;
+                    }
+                }
 
             }
             // TODO: Add your update logic here
