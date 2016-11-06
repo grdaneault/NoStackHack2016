@@ -33,7 +33,7 @@ namespace NoStackHack.Rendering
             PhysicsComponent.Update(time);
         }
 
-        public void TrackBoxes(List<Box> boxes, float xPad=250, float YPad=300)
+        public void TrackBoxes(List<Box> boxes, float xPad=100, float YPad=150)
         {
             var xMax = boxes.Max(b => b.Right + xPad);
             var xMin = boxes.Min(b => b.Left - xPad);
