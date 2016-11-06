@@ -17,5 +17,10 @@ namespace NoStackHack.Utilities
         {
             return new Vector2(v.X, v.Y) / v.Length();
         }
+
+        public static Vector2 ToVector(this float angle)
+        {
+            return new Vector2((float)Math.Cos(angle), (float)Math.Sin(angle));
+        }
     }
 }

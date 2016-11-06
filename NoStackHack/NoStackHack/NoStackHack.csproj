@@ -56,8 +56,10 @@
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Rendering\BackgroundImage.cs" />
+    <Compile Include="Rendering\Character\Apendage.cs" />
     <Compile Include="Rendering\Character\CharacterVisual.cs" />
     <Compile Include="Rendering\Character\IdleState.cs" />
+    <Compile Include="Rendering\Character\Joint.cs" />
     <Compile Include="Rendering\RenderHelper.cs" />
     <Compile Include="Utilities\Box.cs" />
     <Compile Include="Utilities\BoxLoader.cs" />

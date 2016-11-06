@@ -16,7 +16,7 @@ namespace NoStackHack.Utilities
         public float Right { get { return Position.X + Size.X; } }
         public float Top { get { return Position.Y; } }
         public float Bottom { get { return Position.Y + Size.Y; } }
-
+        public float MiddleX { get { return Position.X + Size.X / 2; } }
         public Box(Vector2 position, Vector2 size)
         {
             Position = position;

@@ -8,7 +8,7 @@ using NoStackHack.Rendering;
 
 namespace NoStackHack
 {
-    class Player : IJumper, IMovable, IResetable
+    public class Player : IJumper, IMovable, IResetable
     {
         public PhysicsComponent PhysicsComponent { get; private set; }
 
@@ -22,7 +22,7 @@ namespace NoStackHack
             PlayerIndex = PlayerIndex.One;
             PhysicsComponent = new PhysicsComponent();
             PhysicsComponent.Position = new Vector2(500, 500);
-            VisualComponent = new VisualComponent();
+            VisualComponent = new VisualComponent(this);
         }
 
         public Player(PlayerIndex playerIndex)
@@ -30,7 +30,7 @@ namespace NoStackHack
             PlayerIndex = playerIndex;
             PhysicsComponent = new PhysicsComponent();
             PhysicsComponent.Position = new Vector2(500, 500);
-            VisualComponent = new VisualComponent();
+            VisualComponent = new VisualComponent(this);
         }
 
         public void Move(Vector2 direction)
