@@ -8,8 +8,9 @@ namespace NoStackHack.Rendering
     public class RenderHelper
     {
         public GraphicsDevice Device { get; private set; }
-        public SpriteBatch Batch { get; private set; }
+        public SpriteBatchDecarator Batch { get; private set; }
         public Texture2D Pixel { get; private set; }
+        public Camera ActiveCamera { get; set; }
 
         public void Init(GraphicsDevice device)
         {
@@ -17,9 +18,10 @@ namespace NoStackHack.Rendering
 
             Pixel = new Texture2D(Device, 1, 1, false, SurfaceFormat.Color);
             Pixel.SetData<Color>(new Color[] { Color.White });
+            ActiveCamera = new Camera(new Vector2(1920, 1080));
+            //Batch = new SpriteBatch(Device);
 
-            Batch = new SpriteBatch(Device);
-            
+            Batch = new SpriteBatchDecarator(new SpriteBatch(Device), this);
         }
         
         public void DrawBox(Box box, Color color = default(Color))

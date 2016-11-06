@@ -12,15 +12,15 @@ namespace NoStackHack.Rendering
     class Fonter
     {
         private GraphicsDevice _device;
-        private SpriteBatch _batch;
+        private SpriteBatchDecarator _batch;
         private Rectangle _screenSize;
         private SpriteFont _font;
         public List<Message> Messages = new List<Message>();
 
-        public void Init(GraphicsDevice device, Rectangle screenSize)
+        public void Init(RenderHelper helper, Rectangle screenSize)
         {
-            _device = device;
-            _batch = new SpriteBatch(_device);
+            _device = helper.Device;
+            _batch = helper.Batch;
             _screenSize = screenSize;
         }
 

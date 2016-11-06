@@ -10,7 +10,7 @@ namespace NoStackHack
 {
     public class Player : IJumper, IMovable, IResetable
     {
-        public PhysicsComponent PhysicsComponent { get; private set; }
+        public PhysicsComponentVector PhysicsComponent { get; private set; }
 
         public VisualComponent VisualComponent { get; private set; }
 
@@ -21,7 +21,7 @@ namespace NoStackHack
         public Player()
         {
             PlayerIndex = PlayerIndex.One;
-            PhysicsComponent = new PhysicsComponent();
+            PhysicsComponent = new PhysicsComponentVector();
             PhysicsComponent.Position = new Vector2(500, 500);
             VisualComponent = new VisualComponent(this);
         }
@@ -29,7 +29,7 @@ namespace NoStackHack
         public Player(PlayerIndex playerIndex)
         {
             PlayerIndex = playerIndex;
-            PhysicsComponent = new PhysicsComponent();
+            PhysicsComponent = new PhysicsComponentVector();
             PhysicsComponent.Position = new Vector2(500, 500);
             VisualComponent = new VisualComponent(this);
         }

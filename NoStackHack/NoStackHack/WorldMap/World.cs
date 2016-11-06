@@ -6,6 +6,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using NoStackHack.Rendering;
 
 namespace NoStackHack.WorldMap
 {
@@ -13,7 +14,7 @@ namespace NoStackHack.WorldMap
     {
         private Tile[][] _map;
         private GraphicsDevice _device;
-        private SpriteBatch _batch;
+        private SpriteBatchDecarator _batch;
         private Rectangle _screenSize; //todo pull out into base class of some sort?
 
         public int Rows
@@ -33,10 +34,10 @@ namespace NoStackHack.WorldMap
             _map = map;
         }
 
-        public void Init(GraphicsDevice device, Rectangle screenSize)
+        public void Init(RenderHelper render, Rectangle screenSize)
         {
-            _device = device;
-            _batch = new SpriteBatch(_device);
+            _device = render.Device;
+            _batch = render.Batch;
             _screenSize = screenSize;
             TileSize = new Point(screenSize.Width/30, screenSize.Height/16);
         }

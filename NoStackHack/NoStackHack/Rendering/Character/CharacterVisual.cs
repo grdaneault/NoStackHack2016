@@ -14,8 +14,7 @@ namespace NoStackHack.Rendering.Character
         public StateMachine<GameTime> StateMachine { get; set; }
         public Player Player { get; private set; }
 
-        public PhysicsComponent Physics { get { return Player.PhysicsComponent; } }
-
+        public PhysicsComponentVector Physics { get { return Player.PhysicsComponent; } }
         private Box _body;
         private Box _head;
 

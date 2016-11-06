@@ -8,19 +8,26 @@ using System.Threading.Tasks;
 
 namespace NoStackHack
 {
-    public class PhysicsComponent
+    public abstract class PhysicsComponent<TValue> where TValue : struct
     {
 
-        public Vector2 Position { get; set; }
-        public Vector2 Velocity { get; set; }
-        public Vector2 Acceleration { get; set; }
+        public TValue Position { get; set; }
+        public TValue Velocity { get; set; }
+        public TValue Acceleration { get; set; }
 
         public PhysicsComponent()
         {
 
         }
 
-        public void Update(GameTime time)
+        public abstract void Update(GameTime time);
+
+
+    }
+
+    public class PhysicsComponentVector : PhysicsComponent<Vector2> {
+
+        public override void Update(GameTime time)
         {
             Acceleration += Vector2.UnitY * 2f; // its gravity!
 
@@ -38,4 +45,18 @@ namespace NoStackHack
         }
 
     }
+    public class PhysicsComponentScalar : PhysicsComponent<float>
+    {
+        public override void Update(GameTime time)
+        {
+            Velocity += Acceleration;
+
+            Velocity -= Velocity * .1f;
+
+            Position += Velocity;
+
+            Acceleration = 0;
+        }
+    }
+
 }

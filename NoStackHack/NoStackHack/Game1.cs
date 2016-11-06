@@ -6,6 +6,7 @@ using NoStackHack.Rendering;
 using NoStackHack.Utilities;
 using System.Collections.Generic;
 using NoStackHack.WorldMap;
+using System.Linq;
 
 namespace NoStackHack
 {
@@ -23,6 +24,7 @@ namespace NoStackHack
         private BackgroundImage _background;
         private List<Player> _players = new List<Player>();
         private World _world;
+        private Camera _camera;
         private Fonter _fonter;
 
         public Game1()
@@ -47,12 +49,14 @@ namespace NoStackHack
             // TODO: Add your initialization logic here
             _renderHelper = new RenderHelper();
             _renderHelper.Init(GraphicsDevice);
+            _renderHelper.ActiveCamera.SetWorldConstrains(Vector2.Zero);
+
             _boxes = BoxLoader.LoadFromFile("Content/test_world.boxes");
             _background = new BackgroundImage();
             _background.Init(GraphicsDevice, _screenSize);
-
-            _world = WorldLoader.Load("Content/level2.map", Content);
-            _world.Init(GraphicsDevice, _screenSize);
+            
+            _world = WorldLoader.Load("Content/level3.map", Content);
+            _world.Init(_renderHelper, _screenSize);
 
             _boxes = WorldLoader.GenerateHitboxes(_world);
 
@@ -62,7 +66,7 @@ namespace NoStackHack
             _players.Add(player2);
 
             _fonter = new Fonter();
-            _fonter.Init(GraphicsDevice, _screenSize);
+            _fonter.Init(_renderHelper, _screenSize);
             _fonter.Messages.Add(new Message(() => player1.PhysicsComponent.Position, () => "P1:\n" + player1.PhysicsComponent.Position));
             _fonter.Messages.Add(new Message(() => player2.PhysicsComponent.Position, () => "P2:\n" + player2.PhysicsComponent.Position));
             base.Initialize();
@@ -113,6 +117,9 @@ namespace NoStackHack
             }
             // TODO: Add your update logic here
 
+            _renderHelper.ActiveCamera.TrackBoxes(_players.Select(p => p.Box).ToList());
+            _renderHelper.ActiveCamera.Update(gameTime);
+            
             base.Update(gameTime);
         }
 
@@ -145,6 +152,8 @@ namespace NoStackHack
                 player.Render(_renderHelper);
                 //_renderHelper.DrawBox(player.Box);
             }
+
+            _renderHelper.ActiveCamera.PhysicsComponent.Position = _players[0].PhysicsComponent.Position;
 
             _renderHelper.Batch.End();
 

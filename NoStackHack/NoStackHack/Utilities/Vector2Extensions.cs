@@ -17,6 +17,10 @@ namespace NoStackHack.Utilities
         {
             return new Vector2(v.X, v.Y) / v.Length();
         }
+        public static Vector3 As3(this Vector2 v)
+        {
+            return new Vector3(v.X, v.Y, 0);
+        }
 
         public static Vector2 ToVector(this float angle)
         {
