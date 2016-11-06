@@ -51,7 +51,7 @@ namespace NoStackHack
             _background = new BackgroundImage();
             _background.Init(GraphicsDevice, _screenSize);
 
-            _world = WorldLoader.Load("Content/level1.map", Content);
+            _world = WorldLoader.Load("Content/level2.map", Content);
             _world.Init(GraphicsDevice, _screenSize);
 
             _boxes = WorldLoader.GenerateHitboxes(_world);
