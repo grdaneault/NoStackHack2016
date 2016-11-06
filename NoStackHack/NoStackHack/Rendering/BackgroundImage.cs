@@ -16,14 +16,14 @@ namespace NoStackHack.Rendering
         private Texture2D _clouds;
         private Texture2D _streak;
         private Rectangle _screenSize;
-        private SpriteBatch _batch;
+        private SpriteBatchDecarator _batch;
         private GraphicsDevice _device;
         private List<Streak> _streaks;
 
-        public void Init(GraphicsDevice device, Rectangle screenSize)
+        public void Init(RenderHelper render, Rectangle screenSize)
         {
-            _device = device;
-            _batch = new SpriteBatch(_device);
+            _device = render.Device;
+            _batch = render.Batch;
             _screenSize = screenSize;
             _streaks = new List<Streak>(250);
             var rand = new Random(10);
@@ -58,7 +58,8 @@ namespace NoStackHack.Rendering
             _batch.Draw(_clouds, _screenSize, null, color, 0f, Vector2.Zero, SpriteEffects.None, 1f);
             _batch.End();
 
-            _batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, Matrix.CreateRotationZ(0.1f));
+            var transform = _batch.Helper.ActiveCamera.GetTransform() * Matrix.CreateRotationZ(.1f);
+            _batch.Begin(SpriteSortMode.Deferred, null, null, null, null, null, transform);
             
             foreach (var streak in _streaks)
             {

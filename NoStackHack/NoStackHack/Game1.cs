@@ -53,10 +53,16 @@ namespace NoStackHack
 
             _boxes = BoxLoader.LoadFromFile("Content/test_world.boxes");
             _background = new BackgroundImage();
-            _background.Init(GraphicsDevice, _screenSize);
+            _background.Init(_renderHelper, _screenSize);
             
             _world = WorldLoader.Load("Content/level3.map", Content);
             _world.Init(_renderHelper, _screenSize);
+
+            _renderHelper.ActiveCamera.WorldBotRight = new Vector2()
+            {
+                X = _world.Cols * _world.TileSize.X + 1,
+                Y = _world.Rows * _world.TileSize.Y + 1
+            };
 
             _boxes = WorldLoader.GenerateHitboxes(_world);
 
@@ -118,9 +124,9 @@ namespace NoStackHack
             // TODO: Add your update logic here
 
             _renderHelper.ActiveCamera.TrackBoxes(_players.Select(p => p.Box).ToList());
+            //_renderHelper.ActiveCamera.PhysicsComponent.Position = _players[0].PhysicsComponent.Position;
             _renderHelper.ActiveCamera.Update(gameTime);
 
-            //_renderHelper.ActiveCamera.PhysicsComponent.Position = _players[0].PhysicsComponent.Position;
 
 
             base.Update(gameTime);

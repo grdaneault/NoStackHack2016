@@ -47,7 +47,7 @@ namespace NoStackHack.Rendering
             SpriteEffects effects,
             float depth)
         {
-            depth /= 3;
+            depth /= 7;
             Batch.Draw(image, position, source, destination, offset, angle, scale, color, effects, depth);
         }
 
@@ -61,8 +61,21 @@ namespace NoStackHack.Rendering
             SpriteEffects effects,
             float depth)
         {
-            depth /= 3;
+            depth /= 7;
             Batch.Draw(image, position, source, color, angle, offset, scale, effects, depth);
+        }
+
+        public void Draw(Texture2D image,
+            Rectangle destination,
+            Rectangle? source,
+            Color color,
+            float angle,
+            Vector2 offset, 
+            SpriteEffects effects,
+            float depth)
+        {
+            depth /= 7;
+            Batch.Draw(image, destination, source, color, angle, offset, effects, depth);
         }
 
         public void Draw(Texture2D image, 
