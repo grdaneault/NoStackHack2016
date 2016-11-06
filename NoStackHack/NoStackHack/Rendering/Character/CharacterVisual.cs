@@ -1,4 +1,5 @@
 ﻿using Microsoft.Xna.Framework;
+using NoStackHack.PlayerState;
 using NoStackHack.Utilities;
 using System;
 using System.Collections.Generic;
@@ -10,8 +11,6 @@ namespace NoStackHack.Rendering.Character
 {
     public class VisualComponent
     {
-
-        public StateMachine<GameTime> StateMachine { get; set; }
         public Player Player { get; private set; }
 
         public PhysicsComponentVector Physics { get { return Player.PhysicsComponent; } }
@@ -34,7 +33,6 @@ namespace NoStackHack.Rendering.Character
         public VisualComponent(Player player)
         {
             Player = player;
-            StateMachine = new StateMachine<GameTime>(new IdleState());
 
             _head = new Box(Physics.Position, new Vector2(35, 46));
 
@@ -154,8 +152,6 @@ namespace NoStackHack.Rendering.Character
 
             _frontArm.BasePosition = new Vector2(_body.MiddleX, _body.Top);
             _frontArm.TipPosition = new Vector2(_body.MiddleX + 10, _body.Bottom + 10) + frontArmAgg;
-
-            StateMachine.Update(time);
         }
 
         public void Render(RenderHelper render)
@@ -169,6 +165,21 @@ namespace NoStackHack.Rendering.Character
             _backFoot.Render(render);
             _frontArm.Render(render);
         }
+        //public StateMachine<GameTime> StateMachine { get; set; }
 
+        //public VisualComponent()
+        //{
+        //    StateMachine = new StateMachine<GameTime>(new IdleStateIgnore());
+        //}
+
+        //public void Update(GameTime time)
+        //{
+        //    StateMachine.Update(time);
+        //}
+
+        //public void Render(RenderHelper render)
+        //{
+
+        //}
     }
 }

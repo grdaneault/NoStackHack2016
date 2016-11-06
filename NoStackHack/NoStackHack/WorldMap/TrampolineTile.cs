@@ -21,7 +21,7 @@ namespace NoStackHack.WorldMap
 
         public override ICommand InteractWithPlayer(Player player)
         {
-            return new JumpCommand(10);
+            return new JumpCommand(60);
         }
     }
 }

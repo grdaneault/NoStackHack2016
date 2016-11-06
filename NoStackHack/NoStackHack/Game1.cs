@@ -77,6 +77,7 @@ namespace NoStackHack
             _fonter.Init(_renderHelper, _screenSize);
             _fonter.Messages.Add(new Message(() => player1.PhysicsComponent.Position, () => "P1:\n" + player1.PhysicsComponent.Position));
             _fonter.Messages.Add(new Message(() => player2.PhysicsComponent.Position, () => "P2:\n" + player2.PhysicsComponent.Position));
+            //_fonter.Messages.Add(new Message(() => player1.))
             base.Initialize();
         }
 

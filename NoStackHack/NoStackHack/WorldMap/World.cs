@@ -87,7 +87,7 @@ namespace NoStackHack.WorldMap
 
         public IList<ICommand> UpdatePlayerForWorld(Player player)
         {
-            var padding = 3;
+            var padding = 1;
             var top = (int)Math.Floor((player.Box.Top - padding) / TileSize.Y);
             var left = (int)Math.Floor((player.Box.Left - padding) / TileSize.X);
             var right = (int)Math.Floor((player.Box.Right + padding) / TileSize.X);

@@ -40,7 +40,7 @@ namespace NoStackHack
 
             if (Velocity.Length() > 50)
             {
-                Velocity = Velocity.Normal() * 50;
+                //Velocity = Velocity.Normal() * 50;
             }
 
             Velocity -= new Vector2(Velocity.X * .1f, Velocity.Y * .05f);
