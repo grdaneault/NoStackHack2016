@@ -24,29 +24,38 @@ namespace NoStackHack.Rendering.Character
         private Joint _backFoot;
         private Apendage _backLeg;
 
+        private Apendage _frontArm;
+
         private double _tickedTime;
+
+        private float _footLength = 15;
+        private float _jointLength = 40;
 
         public VisualComponent(Player player)
         {
             Player = player;
             StateMachine = new StateMachine<GameTime>(new IdleState());
+            
 
-            _body = new Box(Physics.Position, new Vector2(50, 75));
+            _body = new Box(Physics.Position, new Vector2(40, 75));
             _frontFoot = new Joint();
-            _frontFoot.Length = 15;
+            _frontFoot.Length = _footLength;
             _frontFoot.Angle = 0;
 
             _frontLeg = new Apendage();
             _frontLeg.UsePositive = false;
-            _frontLeg.JointLength = 15;
+            _frontLeg.JointLength = _jointLength;
 
             _backFoot = new Joint();
-            _backFoot.Length = 15;
+            _backFoot.Length = _footLength;
             _backFoot.Angle = 0;
 
             _backLeg = new Apendage();
             _backLeg.UsePositive = false;
-            _backLeg.JointLength = 15;
+            _backLeg.JointLength = _jointLength;
+
+            _frontArm = new Apendage();
+            _frontArm.JointLength = _footLength;
 
         }
 
@@ -65,6 +74,9 @@ namespace NoStackHack.Rendering.Character
             var agg = new Vector2(0, -50);
             var speed = 50;
 
+            var xFlip = Math.Sign(Physics.Velocity.X) == -1 ? Vector2.UnitX * _footLength : Vector2.Zero;
+            var xOffset = 5 * Vector2.UnitX;
+
             agg.Y += Math.Min(15, Math.Abs(Physics.Velocity.X) )
                 * 3
                 * (float) -Math.Sin(_tickedTime / speed);
@@ -76,22 +88,22 @@ namespace NoStackHack.Rendering.Character
 
             var genFootAgg = new Func<int, Vector2>( sign => {
                 var footAgg = new Vector2(0, 0);
-                footAgg.Y += Math.Min(15, Math.Abs(Physics.Velocity.X))
+                footAgg.Y += Math.Min(15, Math.Max(1, Math.Abs(Physics.Velocity.X)))
                     * 7
-                    * (float)Math.Cos((MathHelper.PiOver2*sign) + _tickedTime / speed);
+                    * (float)Math.Cos( (MathHelper.PiOver2 * sign) + (_tickedTime / speed));
                 
                 footAgg.Y = -Math.Abs(footAgg.Y);
 
-                footAgg.X += Math.Min(15, Math.Abs(Physics.Velocity.X))
-                    * 5
-                    * (float)Math.Cos((MathHelper.PiOver2 * sign) + _tickedTime / speed);
+                footAgg.X += Math.Min(15, Math.Max(1, Math.Abs(Physics.Velocity.X)))
+                    * 7
+                    * (float)Math.Cos( (MathHelper.PiOver2 * sign) + _tickedTime / speed);
 
                 footAgg.X *= Math.Sign(Physics.Velocity.X);
                 return footAgg;
             });
 
-            var frontFootAgg = genFootAgg(1);
-            var backFootAgg = genFootAgg(-1) - 10*Vector2.UnitX;
+            var frontFootAgg = genFootAgg(1) + xOffset;
+            var backFootAgg = genFootAgg(-1) - xOffset;
 
             _frontFoot.Base = new Vector2(_body.MiddleX, Player.Box.Bottom) + frontFootAgg;
             _backFoot.Base = new Vector2(_body.MiddleX, Player.Box.Bottom) + backFootAgg;
@@ -108,11 +120,11 @@ namespace NoStackHack.Rendering.Character
 
             _frontLeg.UsePositive = _backLeg.UsePositive = Physics.Velocity.X < 0;
 
-            _frontLeg.BasePosition = new Vector2(_body.MiddleX, _body.Bottom);
-            _frontLeg.TipPosition = _frontFoot.Base - (Math.Sign(Physics.Velocity.X)*Vector2.UnitX*10);
+            _frontLeg.BasePosition = new Vector2(_body.MiddleX, _body.Bottom) + xOffset;
+            _frontLeg.TipPosition = _frontFoot.Base + xFlip;
 
-            _backLeg.BasePosition = new Vector2(_body.MiddleX, _body.Bottom) - 10 * Vector2.UnitX ;
-            _backLeg.TipPosition = _backFoot.Base - (Math.Sign(Physics.Velocity.X) * Vector2.UnitX * 10);
+            _backLeg.BasePosition = new Vector2(_body.MiddleX, _body.Bottom) - xOffset;
+            _backLeg.TipPosition = _backFoot.Base + xFlip;
 
 
             StateMachine.Update(time);
@@ -120,7 +132,7 @@ namespace NoStackHack.Rendering.Character
 
         public void Render(RenderHelper render)
         {
-            render.DrawBox(_body, Color.Red);
+            render.DrawBox(_body, Color.White);
 
 
             _frontLeg.Render(render);

@@ -16,6 +16,7 @@ namespace NoStackHack
 
         public Box Box { get { return new Box(PhysicsComponent.Position, new Vector2(50, 100)); } }
 
+        private double _tickers = 0;
 
         public Player()
         {
@@ -35,8 +36,16 @@ namespace NoStackHack
 
         public void Move(Vector2 direction)
         {
-            PhysicsComponent.Acceleration += new Vector2(direction.X, 0);
-            
+            //PhysicsComponent.Acceleration += new Vector2(3 * direction.X * ( (-Math.Sign(direction.X) * .2f) + (float)Math.Sin(PhysicsComponent.Velocity.X) ) , 0);
+
+            //if (Math.Abs( PhysicsComponent.Velocity.X) < .5f)
+            //{
+            //    _tickers = 0;
+            //}
+            //_tickers += .15;
+            //PhysicsComponent.Acceleration += Vector2.UnitX * (direction.X * (float) Math.Abs(Math.Sin(_tickers)));
+
+            PhysicsComponent.Acceleration += Vector2.UnitX * direction.X;
         }
 
         public void Jump()
