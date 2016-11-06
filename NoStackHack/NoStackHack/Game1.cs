@@ -5,6 +5,7 @@ using NoStackHack.ControlInput;
 using NoStackHack.Rendering;
 using NoStackHack.Utilities;
 using System.Collections.Generic;
+using NoStackHack.WorldMap;
 
 namespace NoStackHack
 {
@@ -21,6 +22,7 @@ namespace NoStackHack
         private List<Box> _boxes;
         private BackgroundImage _background;
         private List<Player> _players = new List<Player>();
+        private World _world;
 
         public Game1()
         {
@@ -47,6 +49,10 @@ namespace NoStackHack
             _boxes = BoxLoader.LoadFromFile("Content/test_world.boxes");
             _background = new BackgroundImage();
             _background.Init(GraphicsDevice, _screenSize);
+
+            _world = WorldLoader.Load("Content/level1.map", Content);
+            _world.Init(GraphicsDevice, _screenSize);
+            _boxes = WorldLoader.GenerateHitboxes(_world);
 
             var player1 = new Player(PlayerIndex.One);
             var player2 = new Player(PlayerIndex.Two);
@@ -109,16 +115,24 @@ namespace NoStackHack
         protected override void Draw(GameTime gameTime)
         {
             GraphicsDevice.Clear(Color.Navy);
+            
+
+            _world.DrawBackground();
+
+            _background.Draw();
+
+            
+            _world.DrawForeground();
 
             _renderHelper.Batch.Begin();
 
-            foreach(Box box in _boxes)
+            foreach (Box box in _boxes)
             {
-                _renderHelper.DrawBox(box.Position, box.Size, Color.OliveDrab);
+                _renderHelper.DrawBox(box.Position, box.Size, new Color(Color.Red, 100));
             }
-            _background.Draw();
 
-            foreach(var player in _players)
+
+            foreach (var player in _players)
             {
                 player.Render(_renderHelper);
                 //_renderHelper.DrawBox(player.Box);
