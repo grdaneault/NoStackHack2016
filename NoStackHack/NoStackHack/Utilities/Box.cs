@@ -39,5 +39,20 @@ namespace NoStackHack.Utilities
             };
         }
 
+        public bool IsInside(Box other)
+        {
+            return Position.X >= other.Position.X && Right <= other.Right && Position.Y >= other.Position.Y &&
+                   Bottom <= other.Bottom;
+        }
+
+        public override bool Equals(object obj)
+        {
+            var box = obj as Box;
+            if (box == null)
+            {
+                return false;
+            }
+            return box.Position.Equals(Position) && box.Size.Equals(Size);
+        }
     }
 }
