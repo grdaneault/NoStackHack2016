@@ -5,11 +5,11 @@ namespace NoStackHack.WorldMap
 {
     class Tile
     {
-        public Texture2D Foreground { get { return _textures[_foreground]; } }
-        public Texture2D Background { get { return _textures[_background]; } }
+        public Texture2D Foreground => _textures[_foreground];
+        public Texture2D Background => _textures[_background];
 
-        private char _foreground;
-        private char _background;
+        private readonly char _foreground;
+        private readonly char _background;
 
         public bool IsFilled { get { return _foreground != ' '; } }
 

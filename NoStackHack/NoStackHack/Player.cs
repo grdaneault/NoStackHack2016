@@ -77,7 +77,7 @@ namespace NoStackHack
                 if (info.IsColliding)
                 {
                     PhysicsComponent.Position -= info.Normal * info.Overlap;
-                    PhysicsComponent.Velocity = Vector2.Reflect(PhysicsComponent.Velocity, info.Normal);
+                    PhysicsComponent.Velocity = Vector2.Reflect(PhysicsComponent.Velocity, info.Normal) * new Vector2(1f, 0.5f); // debounce the player somewhat
                     //player.Acceleration -= info.Normal * info.Overlap;
                 }
             }
