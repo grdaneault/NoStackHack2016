@@ -12,7 +12,7 @@ namespace NoStackHack
     {
         public PhysicsComponent PhysicsComponent { get; private set; }
 
-        public CharacterComponent Visual { get; private set; }
+        public VisualComponent VisualComponent { get; private set; }
 
         public Box Box { get { return new Box(PhysicsComponent.Position, new Vector2(50, 100)); } }
 
@@ -22,7 +22,7 @@ namespace NoStackHack
             PlayerIndex = PlayerIndex.One;
             PhysicsComponent = new PhysicsComponent();
             PhysicsComponent.Position = new Vector2(500, 500);
-            Visual = new CharacterComponent();
+            VisualComponent = new VisualComponent();
         }
 
         public Player(PlayerIndex playerIndex)
@@ -30,7 +30,7 @@ namespace NoStackHack
             PlayerIndex = playerIndex;
             PhysicsComponent = new PhysicsComponent();
             PhysicsComponent.Position = new Vector2(500, 500);
-            Visual = new CharacterComponent();
+            VisualComponent = new VisualComponent();
         }
 
         public void Move(Vector2 direction)
@@ -59,7 +59,7 @@ namespace NoStackHack
         {
 
             PhysicsComponent.Update(time);
-            Visual.Update(time);
+            VisualComponent.Update(time);
 
             // World physics. This should probably be moved
             foreach (Box box in boxes)
@@ -76,8 +76,8 @@ namespace NoStackHack
 
         public void Render(RenderHelper render)
         {
-            render.DrawBox(Box, Color.Orange);
-            Visual.Render(render);
+            render.DrawBox(Box, Color.FromNonPremultiplied(128, 128, 128, 128));
+            VisualComponent.Render(render);
         }
 
     
