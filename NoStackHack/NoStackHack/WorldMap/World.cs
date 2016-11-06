@@ -110,5 +110,42 @@ namespace NoStackHack.WorldMap
 
             return commandSet.ToList();
         }
+
+        internal Box FindTileBelowBox(Box b, int bottomPadding=12)
+        {
+            var padding = 3;
+            bottomPadding *= TileSize.Y;
+            var top = (int)Math.Floor((b.Top - padding) / TileSize.Y);
+            var left = (int)Math.Floor((b.Left - padding) / TileSize.X);
+            var right = (int)Math.Floor((b.Right + padding) / TileSize.X);
+            var bottom = (int)Math.Floor((b.Bottom + bottomPadding) / TileSize.Y);
+
+
+            var furthestUp = float.MaxValue;
+            Box workingBox = null;
+
+
+            for (var x = left; x <= right; x++)
+            {
+                for (var y = top; y <= bottom; y++)
+                {
+                    if (y >= 0 && y < Rows && x >= 0 && x < Cols)
+                    {
+                        var tile = _map[y][x];
+                        if (tile.IsFilled())
+                        {
+                            _touchingPlayer.Add(tile);
+                            if (y < furthestUp)
+                            {
+                                furthestUp = y;
+                                workingBox = new Box(tile.Position * TileSize.ToVector2(), TileSize.ToVector2());
+                            }
+                        }
+                    }
+                }
+            }
+            return workingBox;
+            
+        }
     }
 }

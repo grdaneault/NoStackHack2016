@@ -13,6 +13,9 @@ namespace NoStackHack.Rendering
         public PhysicsComponentVector PhysicsComponent { get; set; } = new PhysicsComponentVector();
         public PhysicsComponentScalar ScaleComponent { get; set; } = new PhysicsComponentScalar();
 
+        private Vector2 _targetPosition;
+        private float _targetScale;
+
         public Vector2 ScreenDimension { get; set; }
 
         public Vector2 WorldTopLeft { get; set; }
@@ -22,7 +25,7 @@ namespace NoStackHack.Rendering
         {
             ScreenDimension = screenDimension;
             PhysicsComponent.Position = ScreenDimension / 2;
-
+            PhysicsComponent.GravityMultiplier = 0;
 
             WorldTopLeft = Vector2.Zero;
             WorldBotRight = screenDimension;
@@ -30,10 +33,11 @@ namespace NoStackHack.Rendering
 
         public void Update(GameTime time)
         {
+            ScaleComponent.Update(time);
             PhysicsComponent.Update(time);
         }
 
-        public void TrackBoxes(List<Box> boxes, float xPad=100, float YPad=150)
+        public void TrackBoxes(List<Box> boxes, float xPad=200, float YPad=250)
         {
             var xMax = boxes.Max(b => b.Right + xPad);
             var xMin = boxes.Min(b => b.Left - xPad);
@@ -45,16 +49,22 @@ namespace NoStackHack.Rendering
             var yMid = (yMax + yMin) / 2;
 
             var target = new Vector2(xMid, yMid);
-            PhysicsComponent.Position = target;
+            _targetPosition = target;
 
             var dist = new Vector2(xMax - xMin, yMax - yMin);
 
-            ScaleComponent.Position = Math.Max(
+            _targetScale = Math.Max(
                 dist.X / ScreenDimension.X,
                 dist.Y / ScreenDimension.Y);
 
-            ScaleComponent.Position = Math.Min(2f, ScaleComponent.Position);
-            ScaleComponent.Position = Math.Max(.4f, ScaleComponent.Position);
+            _targetScale = Math.Min(2f, _targetScale);
+            _targetScale = Math.Max(.8f, _targetScale);
+
+            ScaleComponent.Acceleration = (_targetScale - ScaleComponent.Position) * .005f;
+            PhysicsComponent.Acceleration = (_targetPosition - PhysicsComponent.Position) * .007f;
+
+      
+
 
         }
         public void SetWorldConstrains(Vector2 topLeft)

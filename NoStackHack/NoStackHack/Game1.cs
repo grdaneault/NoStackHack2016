@@ -55,7 +55,7 @@ namespace NoStackHack
             _background = new BackgroundImage();
             _background.Init(_renderHelper, _screenSize);
             
-            _world = WorldLoader.Load("Content/level1.map", Content);
+            _world = WorldLoader.Load("Content/level3.map", Content);
             _world.Init(_renderHelper, _screenSize);
 
             _renderHelper.ActiveCamera.WorldBotRight = new Vector2()
@@ -68,8 +68,10 @@ namespace NoStackHack
 
             var player1 = new Player(PlayerIndex.One);
             var player2 = new Player(PlayerIndex.Two);
+            var player3 = new Player(PlayerIndex.Three);
             _players.Add(player1);
             _players.Add(player2);
+            _players.Add(player3);
 
             _fonter = new Fonter();
             _fonter.Init(_renderHelper, _screenSize);
@@ -122,8 +124,25 @@ namespace NoStackHack
 
             // TODO: Add your update logic here
 
-            _renderHelper.ActiveCamera.TrackBoxes(_players.Select(p => p.Box).ToList());
-            //_renderHelper.ActiveCamera.PhysicsComponent.Position = _players[0].PhysicsComponent.Position;
+            var boxes = _players.Select(p => p.Box).ToList();
+            boxes.ForEach(b =>
+            {
+                var bottom = _world.FindTileBelowBox(b, 12);
+                if (bottom != null)
+                {
+                    b.Size = new Vector2(b.Size.X, (bottom.Bottom - b.Top) );
+                }
+            });
+            //foreach (var player in _players)
+            //{
+            //    var bottom = _world.FindTileBelowBox(player);
+            //    if (bottom != null)
+            //    {
+            //        boxes.Add(bottom);
+            //    }
+            //}
+
+            _renderHelper.ActiveCamera.TrackBoxes(boxes);
             _renderHelper.ActiveCamera.Update(gameTime);
 
 

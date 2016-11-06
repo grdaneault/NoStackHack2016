@@ -15,6 +15,8 @@ namespace NoStackHack
         public TValue Velocity { get; set; }
         public TValue Acceleration { get; set; }
 
+        
+
         public PhysicsComponent()
         {
 
@@ -27,9 +29,12 @@ namespace NoStackHack
 
     public class PhysicsComponentVector : PhysicsComponent<Vector2> {
 
+
+        public float GravityMultiplier { get; set; } = 2f;
+
         public override void Update(GameTime time)
         {
-            Acceleration += Vector2.UnitY * 2f; // its gravity!
+            Acceleration += Vector2.UnitY * GravityMultiplier; // its gravity!
 
             Velocity += Acceleration;
 
