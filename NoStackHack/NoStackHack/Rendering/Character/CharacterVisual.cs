@@ -17,6 +17,7 @@ namespace NoStackHack.Rendering.Character
         public PhysicsComponent Physics { get { return Player.PhysicsComponent; } }
 
         private Box _body;
+        private Box _head;
 
         private Joint _frontFoot;
         private Apendage _frontLeg;
@@ -35,7 +36,8 @@ namespace NoStackHack.Rendering.Character
         {
             Player = player;
             StateMachine = new StateMachine<GameTime>(new IdleState());
-            
+
+            _head = new Box(Physics.Position, new Vector2(35, 46));
 
             _body = new Box(Physics.Position, new Vector2(40, 75));
             _frontFoot = new Joint();
@@ -55,7 +57,7 @@ namespace NoStackHack.Rendering.Character
             _backLeg.JointLength = _jointLength;
 
             _frontArm = new Apendage();
-            _frontArm.JointLength = _footLength;
+            _frontArm.JointLength = 45;
 
         }
 
@@ -84,6 +86,13 @@ namespace NoStackHack.Rendering.Character
             _body.Position = Physics.Position + agg;
 
 
+            var headAgg = new Vector2(0, 0);
+            headAgg.Y += Math.Min(15, Math.Abs(Physics.Velocity.X))
+                * 1
+                * (float)-Math.Sin(_tickedTime / speed*2);
+
+            _head.Position = new Vector2(_body.MiddleX - (_head.Size.X/2), _body.Top - (_head.Size.Y + 7)) + headAgg;
+
 
 
             var genFootAgg = new Func<int, Vector2>( sign => {
@@ -102,8 +111,25 @@ namespace NoStackHack.Rendering.Character
                 return footAgg;
             });
 
+            var genArmAgg = new Func<int, Vector2>(sign =>
+           {
+               var armAgg = Vector2.Zero;
+               armAgg.X += Math.Min(15, Math.Max(1, Math.Abs(Physics.Velocity.X)))
+                    * 3
+                    * (float)Math.Cos( (_tickedTime / speed / 2));
+               armAgg.X = Math.Abs(armAgg.X);
+
+               armAgg.Y += Math.Min(15, Math.Max(1, Math.Abs(Physics.Velocity.X)))
+                     * 9
+                     * (float)Math.Sin( (_tickedTime / speed/2));
+               armAgg.Y = -Math.Abs(armAgg.Y);
+               return armAgg;
+           });
+
             var frontFootAgg = genFootAgg(1) + xOffset;
             var backFootAgg = genFootAgg(-1) - xOffset;
+
+            var frontArmAgg = genArmAgg(Math.Sign(Physics.Velocity.X));
 
             _frontFoot.Base = new Vector2(_body.MiddleX, Player.Box.Bottom) + frontFootAgg;
             _backFoot.Base = new Vector2(_body.MiddleX, Player.Box.Bottom) + backFootAgg;
@@ -119,6 +145,7 @@ namespace NoStackHack.Rendering.Character
             //}
 
             _frontLeg.UsePositive = _backLeg.UsePositive = Physics.Velocity.X < 0;
+            _frontArm.UsePositive = Physics.Velocity.X > 0;
 
             _frontLeg.BasePosition = new Vector2(_body.MiddleX, _body.Bottom) + xOffset;
             _frontLeg.TipPosition = _frontFoot.Base + xFlip;
@@ -126,6 +153,8 @@ namespace NoStackHack.Rendering.Character
             _backLeg.BasePosition = new Vector2(_body.MiddleX, _body.Bottom) - xOffset;
             _backLeg.TipPosition = _backFoot.Base + xFlip;
 
+            _frontArm.BasePosition = new Vector2(_body.MiddleX, _body.Top);
+            _frontArm.TipPosition = new Vector2(_body.MiddleX + 10, _body.Bottom + 10) + frontArmAgg;
 
             StateMachine.Update(time);
         }
@@ -133,12 +162,13 @@ namespace NoStackHack.Rendering.Character
         public void Render(RenderHelper render)
         {
             render.DrawBox(_body, Color.White);
-
+            render.DrawBox(_head, Color.White);
 
             _frontLeg.Render(render);
             _backLeg.Render(render);
             _frontFoot.Render(render);
             _backFoot.Render(render);
+            _frontArm.Render(render);
         }
 
     }
