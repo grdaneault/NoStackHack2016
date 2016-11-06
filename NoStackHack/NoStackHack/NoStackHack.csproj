@@ -70,7 +70,12 @@
     <Compile Include="Utilities\IStateMachine.cs" />
     <Compile Include="Utilities\Vector2Extensions.cs" />
     <Compile Include="Rendering\Streak.cs" />
+    <Compile Include="WorldMap\EmptyTile.cs" />
+    <Compile Include="WorldMap\SolidTile.cs" />
     <Compile Include="WorldMap\Tile.cs" />
+    <Compile Include="WorldMap\TileFactory.cs" />
+    <Compile Include="WorldMap\TrampolineTile.cs" />
+    <Compile Include="WorldMap\WaterTile.cs" />
     <Compile Include="WorldMap\World.cs" />
     <Compile Include="WorldMap\WorldLoader.cs" />
   </ItemGroup>
